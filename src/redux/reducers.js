@@ -5,6 +5,8 @@ const CLEAR = 'CLEAR';
 const ADD = 'ADD';
 const EQUALS = 'EQUALS';
 
+let isResult;
+
 const clear = () => ({
   type: CLEAR,
 });
@@ -19,9 +21,18 @@ const equals = () => ({
 });
 
 function constructFormula(formula, element) {
+  // New calcul after result if not an operation
+  if (isResult) {
+    isResult = false;
+    if (!isNaN(element)) {
+      return element;
+    }
+  }
+
   // Replace zero by the new number
   if (formula === '0') return element;
 
+  // get the last element of the formula
   const last = formula.slice(-1);
 
   // Check for multiple operation
@@ -31,8 +42,10 @@ function constructFormula(formula, element) {
     return formula.slice(0, -counter) + element;
   }
 
+  // Set the new formula with the new element
   const newFormula = formula + element;
 
+  // Verify the '.' coherence (not 2 point)
   if (element === '.') {
     try {
       parse(newFormula);
@@ -44,6 +57,16 @@ function constructFormula(formula, element) {
   return newFormula;
 }
 
+function getResult(formula) {
+  try {
+    const newFormula = evaluate(formula).toString();
+    isResult = true;
+    return newFormula;
+  } catch (Exception) {
+    return formula;
+  }
+}
+
 const calculReducer = (formula = '0', action) => {
   switch (action.type) {
     case CLEAR:
@@ -51,8 +74,7 @@ const calculReducer = (formula = '0', action) => {
     case ADD:
       return constructFormula(formula, action.element);
     case EQUALS: {
-      const newFormula = evaluate(formula).toString();
-      return newFormula;
+      return getResult(formula);
     }
     default:
       return formula;
