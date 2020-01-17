@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { add, clear, equals } from '../redux/reducers';
 
-// TODO: Import components then connect them to props
 import Pad from './Pad';
+import Display from './Display';
 
 const mapPadDispatchToProps = (dispatch) => ({
   add: (element) => (
@@ -16,6 +16,12 @@ const mapPadDispatchToProps = (dispatch) => ({
     dispatch(equals())
   ),
 });
+
+const mapDisplayProps = (formula) => ({
+  formula,
+});
+
+const DisplayContainer = connect(mapDisplayProps, null)(Display);
 
 const PadContainer = connect(null, mapPadDispatchToProps)(Pad);
 
@@ -30,7 +36,7 @@ const App = () => (
           <div className="calculator">
             <div className="row">
               <div className="col-12">
-                <div className="display">0</div>
+                <DisplayContainer />
               </div>
             </div>
             <div className="row no-gutters">
@@ -43,13 +49,13 @@ const App = () => (
             </div>
             <div className="row no-gutters">
               <div className="col-3">
-                <PadContainer value="7" operation="add" id="7" text="7" className="number" />
+                <PadContainer value="7" operation="add" id="seven" text="7" className="number" />
               </div>
               <div className="col-3">
-                <PadContainer value="8" operation="add" id="8" text="8" className="number" />
+                <PadContainer value="8" operation="add" id="eight" text="8" className="number" />
               </div>
               <div className="col-3">
-                <PadContainer value="9" operation="add" id="9" text="9" className="number" />
+                <PadContainer value="9" operation="add" id="nine" text="9" className="number" />
               </div>
               <div className="col-3">
                 <PadContainer value="*" operation="add" id="multiply" text="x" className="operation" />
@@ -57,27 +63,27 @@ const App = () => (
             </div>
             <div className="row no-gutters">
               <div className="col-3">
-                <PadContainer value="4" operation="add" id="4" text="4" className="number" />
+                <PadContainer value="4" operation="add" id="four" text="4" className="number" />
               </div>
               <div className="col-3">
-                <PadContainer value="5" operation="add" id="5" text="5" className="number" />
+                <PadContainer value="5" operation="add" id="five" text="5" className="number" />
               </div>
               <div className="col-3">
-                <PadContainer value="6" operation="add" id="6" text="6" className="number" />
+                <PadContainer value="6" operation="add" id="six" text="6" className="number" />
               </div>
               <div className="col-3">
-                <PadContainer value="-" operation="add" id="substract" text="-" className="operation" />
+                <PadContainer value="-" operation="add" id="subtract" text="-" className="operation" />
               </div>
             </div>
             <div className="row no-gutters">
               <div className="col-3">
-                <PadContainer value="1" operation="add" id="1" text="1" className="number" />
+                <PadContainer value="1" operation="add" id="one" text="1" className="number" />
               </div>
               <div className="col-3">
-                <PadContainer value="2" operation="add" id="2" text="2" className="number" />
+                <PadContainer value="2" operation="add" id="two" text="2" className="number" />
               </div>
               <div className="col-3">
-                <PadContainer value="3" operation="add" id="3" text="3" className="number" />
+                <PadContainer value="3" operation="add" id="three" text="3" className="number" />
               </div>
               <div className="col-3">
                 <PadContainer value="/" operation="add" id="divide" text="/" className="operation" />
@@ -85,10 +91,10 @@ const App = () => (
             </div>
             <div className="row no-gutters">
               <div className="col-6">
-                <PadContainer value="0" operation="add" id="0" text="0" className="number" />
+                <PadContainer value="0" operation="add" id="zero" text="0" className="number" />
               </div>
               <div className="col-3">
-                <PadContainer value="." operation="add" id="decimal" text="," className="number" />
+                <PadContainer value="." operation="add" id="decimal" text="." className="number" />
               </div>
               <div className="col-3">
                 <PadContainer operation="equals" id="equals" text="=" className="operation" />
